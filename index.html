@@ -1,386 +1,345 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Astryx RP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Britské Ozbrojené Síly</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    body {
+      background: #05070d;
+      color: white;
+      overflow-x: hidden;
+    }
 
-<style>
-:root{
-  --orange:#ff7a00;
-  --bg1:#050505;
-  --bg2:#000;
-}
+    /* Glow background */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 140, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(0, 110, 255, 0.2), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(0, 80, 255, 0.2), transparent 35%);
+      z-index: -1;
+      animation: pulse 8s infinite alternate;
+    }
 
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
-  color:white;
-  transition: opacity .2s;
-}
+    @keyframes pulse {
+      0% {
+        filter: blur(20px);
+        transform: scale(1);
+      }
+      100% {
+        filter: blur(40px);
+        transform: scale(1.05);
+      }
+    }
 
-/* NAV */
-nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 30px;
-  background:rgba(0,0,0,0.9);
-  border-bottom:1px solid rgba(255,122,0,0.3);
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 140, 255, 0.4);
+      box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-nav h2{
-  color:var(--orange);
-  text-shadow:0 0 15px var(--orange);
-}
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #4da6ff;
+      text-shadow: 0 0 15px #008cff;
+    }
 
-.nav-links a{
-  color:white;
-  margin-left:20px;
-  text-decoration:none;
-  opacity:.7;
-  position:relative;
-  transition:.3s;
-}
+    nav button {
+      margin-left: 15px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(0, 110, 255, 0.15);
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      border: 1px solid rgba(0,140,255,0.4);
+      box-shadow: 0 0 10px rgba(0,140,255,0.3);
+    }
 
-.nav-links a.active{
-  opacity:1;
-  color:var(--orange);
-}
+    nav button:hover {
+      background: #008cff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #008cff;
+    }
 
-.nav-links a.active::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:100%;
-  height:2px;
-  background:var(--orange);
-  box-shadow:0 0 10px var(--orange);
-}
+    .page {
+      display: none;
+      padding: 50px 40px;
+      animation: fadeIn 0.5s ease;
+    }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:90px 20px 60px;
-}
+    .active {
+      display: block;
+    }
 
-.hero h1{
-  font-size:46px;
-  color:var(--orange);
-  text-shadow:0 0 30px var(--orange);
-}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-/* GRID */
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
-}
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:25px;
-}
+    .hero h1 {
+      font-size: 55px;
+      color: #4da6ff;
+      text-shadow: 0 0 25px #008cff;
+      margin-bottom: 20px;
+    }
 
-/* BOX */
-.rule{
-  background:rgba(255,122,0,0.05);
-  border:1px solid rgba(255,122,0,0.2);
-  padding:22px;
-  border-radius:14px;
-  transition:.3s;
-}
+    .hero p {
+      max-width: 850px;
+      margin: auto;
+      font-size: 20px;
+      color: #cfd8ff;
+      line-height: 1.7;
+    }
 
-.rule:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 25px rgba(255,122,0,0.5);
-}
+    .section-title {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 40px;
+      color: #4da6ff;
+      text-shadow: 0 0 20px #008cff;
+    }
 
-.rule h3{
-  color:var(--orange);
-}
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
 
-.hidden{
-  display:none;
-}
+    .member-card {
+      background: rgba(10, 20, 40, 0.75);
+      border: 1px solid rgba(0, 140, 255, 0.4);
+      border-radius: 18px;
+      padding: 25px;
+      transition: 0.3s;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(0,140,255,0.2);
+    }
 
-/* FADE */
-body.fade{
-  opacity:0;
-}
+    .member-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 30px rgba(0,140,255,0.5);
+      border-color: #4da6ff;
+    }
 
-footer{
-  text-align:center;
-  padding:30px;
-  opacity:0.5;
-  border-top:1px solid rgba(255,122,0,0.2);
-  margin-top:60px;
-}
-</style>
+    .member-card h3 {
+      color: #66b3ff;
+      margin-bottom: 15px;
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(0,140,255,0.5);
+    }
+
+    .member-card p {
+      color: #d6e6ff;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(0,140,255,0.3);
+      color: #8cbcff;
+      background: rgba(0,0,0,0.5);
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 38px;
+      }
+
+      nav button {
+        margin-top: 10px;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<nav>
-<h2>Astryx RP</h2>
-<div class="nav-links">
-<a href="#" onclick="showPage('main', this)">O nás</a>
-<a href="#" onclick="showPage('rules', this)">Pravidla</a>
-<a href="#" onclick="showPage('team', this)">Náš tým</a>
-</div>
-</nav>
-
-<!-- O NAS -->
-<div id="mainPage">
-<section class="hero">
-<h1>O NÁS</h1>
-<p>Moderní RolePlay server zaměřený na kvalitu</p>
-</section>
-
-<div class="container">
-<div class="grid">
-<div class="rule"><h3><b>Kdo jsme?</b></h3><p>Astryx RP, začínající FiveM server, kde každý příběh má svůj začátek.
-Jsme komunita zaměřená na kvalitní a realistický roleplay, ve které si zakládáme na přátelské atmosféře a férovém přístupu ke všem hráčům.
-Na našem serveru nezáleží na tom, jestli jsi zkušený hráč nebo úplný nováček, protože každý má u nás stejnou šanci zapojit se a vytvořit si vlastní příběh.
-Můžeš se vydat jakoukoliv cestou, ať už jako poctivý občan, podnikatel, člen záchranných složek, nebo někdo, kdo se pohybuje na hraně zákona.
-Genesis RP je projekt, který se neustále vyvíjí, a proto nasloucháme zpětné vazbě komunity a pracujeme na neustálém zlepšování herního prostředí.
-Každý hráč je pro nás důležitý a má možnost ovlivnit směr, jakým se server bude ubírat.
-Naším cílem je vytvořit stabilní a zábavné prostředí, kam se hráči budou rádi vracet nejen kvůli samotné hře, ale i kvůli lidem, které zde poznají.
-Pokud hledáš místo, kde můžeš začít od začátku a stát se součástí rostoucí komunity, Astryx RP je pro tebe tou správnou volbou.
-Astryx RP je místo, kde začíná tvůj příběh.</p></div>
-
-<div class="rule"><h3><b>Frakce</b></h3><p>Státní složky</p>
- <p>----------------------------------</p>
-<p>Police Department - volné</p>
-<p>Sheriff Department - volné</p>
-<p>Emergency Medical Services - volné</p>
-<p>Goverment - volné</p>
-<p>-----------------------------------</p>
-<p>Dílny</p>
-<p>-----------------------------------</p>
-<p> Benny´s Original Motorworks - volné</p>
-<p>Los Santos Customs - volné</p>
-<p>Auto Exotic - volné</p>
-<p>-----------------------------------</p>
-<p>Podniky</p>
-<p>-----------------------------------</p>
-<p>Irish pub - volné</p>
-<p>Tequi-la-la - volné</p>
-<p>Bahama Mamas - volné</p>
-<p>Vanilla Unicorn - volné</p>
-<p>Salieri´s Bar - volné</p>
-<p>Burger Shot - volné</p></div>
-</div>
-</div>
-</div>
-
-<!-- PRAVIDLA -->
-<div id="rulesPage" class="hidden">
-<section class="hero">
-<h1>PRAVIDLA</h1>
-<p>Profesionalita - Realismus - Respekt</p>
-</section>
-
-<div class="container">
-<div class="grid">
-<div class="rule"><h3><b>Znalost pravidel</b></h3><p>Každý hráč je povinen znát všechna pravidla serveru ještě před vstupem do hry. Neznalost pravidel není omluva a jakékoliv jejich porušení může vést k trestu. Hráč nese plnou odpovědnost za své chování.</p></div>
-<div class="rule"><h3><b>RolePlay</b></h3><p>Každý hráč je povinen hrát svou postavu realisticky, uvěřitelně a v souladu s prostředím serveru. Postava by měla mít vlastní osobnost, minulost a motivace, které ovlivňují její chování. Je důležité si uvědomit, že nehrajete sami sebe, ale fiktivní charakter, který reaguje na situace tak, jak by reagoval reálný člověk v dané situaci.
-
-Je zakázáno provádět nerealistické úkony, jako je ignorování zranění, okamžité zotavení po vážné nehodě nebo chování, které odporuje fyzickým možnostem člověka. Například pokud vaše postava utrpí vážné zranění při autonehodě nebo přestřelce, je nutné toto zranění odpovídajícím způsobem vyhrát (RP) a ne pokračovat, jako by se nic nestalo.
-
-Roleplay by měl být plynulý, smysluplný a měl by přispívat k zážitku všech hráčů na serveru. Každý hráč by měl dbát na kvalitu RP, nikoliv jen na vlastní prospěch nebo výhody.</p></div>
-
-<div class="rule"><h3><b>Cheaty a bugy</b></h3><p>Používání jakýchkoliv cheatů, hacků nebo externích programů, které poskytují nefér výhodu nad ostatními hráči, je přísně zakázáno a bude trestáno permanentním banem bez možnosti odvolání.
-
-Stejně tak je zakázáno zneužívání herních chyb, známých jako bugy nebo glitchy. To zahrnuje například duplikaci itemů, procházení zdmi, zneužívání animací nebo jakékoliv jiné mechaniky, která není zamýšlená.
-
-Pokud hráč objeví bug, je jeho povinností jej neprodleně nahlásit administraci a dále jej nevyužívat. Zneužití bugů bude považováno za porušení pravidel, i pokud hráč tvrdí, že šlo o testování.</p></div>
-
-<div class="rule"><h3><b>Mixing</b></h3><p>Mixing znamená kombinování informací z reálného světa (OOC – Out Of Character) s informacemi ve hře (IC – In Character). Toto chování je přísně zakázáno, protože narušuje férovost a realističnost roleplaye.
-
-Hráč nesmí využívat informace získané například z Discordu, streamů, chatu nebo od kamarádů mimo hru. Postava může jednat pouze na základě informací, které skutečně získala ve hře přirozeným RP způsobem.
-
-Porušení tohoto pravidla zahrnuje například situace, kdy hráč ví o lokaci jiného hráče díky streamu a vydá se tam ve hře, i když jeho postava tuto informaci nemá.</p></div>
-
-<div class="rule"><h3><b>Combat Logging</b></h3><p>Combat logging je úmyslné odpojení ze serveru během probíhající RP situace s cílem vyhnout se následkům. To zahrnuje například odpojení během přestřelky, zatýkání, únosu nebo jiného konfliktu.
-
-Takové jednání je přísně zakázáno. Pokud dojde k odpojení z technických důvodů, je hráč povinen se co nejdříve vrátit zpět do hry a kontaktovat ostatní hráče nebo administraci, aby mohla být situace korektně dohrána.
-
-Opakované porušení tohoto pravidla bude přísně trestáno.</p></div>
-
-<div class="rule"><h3><b>RP akce</b></h3><p>Každá akce na serveru musí mít logický a realistický důvod. Není dovoleno zahajovat konflikty bez příčiny nebo provádět náhodné násilí vůči ostatním hráčům.
-
-Větší akce, jako jsou loupeže, únosy, přepadení nebo přestřelky, by měly být promyšlené a odpovídat situaci ve hře. Hráči by měli vždy dbát na to, aby jejich akce nebyly zaměřené pouze na zisk, ale také na kvalitní RP pro všechny zúčastněné.
-
-Je zakázáno narušovat RP ostatních hráčů nebo úmyslně kazit průběh akce.</p></div>
-
-<div class="rule"><h3><b>Více postav</b></h3><p>Hráč může mít více postav, ale každá z nich musí být hraná jako samostatná osoba. Postavy mezi sebou nesmí sdílet informace, majetek ani žádné výhody.
-
-Je zakázáno využívat jednu postavu k tomu, aby pomáhala druhé, například převodem peněz nebo předáváním informací. Také není dovoleno, aby postavy věděly o sobě navzájem bez schválení administrace.
-
-Každá postava musí mít vlastní příběh a musí být hraná férově.</p></div>
-
-<div class="rule"><h3><b>Driving</b></h3><p>Řízení vozidel musí být realistické a odpovídat prostředí. Hráči by měli dodržovat dopravní pravidla a přizpůsobit svou jízdu situaci.
-
-Je zakázáno jezdit nerealisticky, například extrémní rychlostí v hustě obydlených oblastech, úmyslně bourat nebo využívat vozidla způsobem, který by v reálném světě nebyl možný.
-
-Dopravní nehody musí být vždy odpovídajícím způsobem odehrány v RP.</p></div>
-
-<div class="rule"><h3><b>Kill on Sight (KOS)</b></h3><p>KOS, neboli „zabití na první pohled“, znamená usmrcení jiné postavy bez jakékoliv předchozí interakce nebo roleplay důvodu. Takové jednání je přísně zakázáno, protože zcela ničí smysl roleplaye a připravuje druhého hráče o možnost reagovat nebo situaci odehrát.
-
-Každý konflikt musí být nejprve rozehrán prostřednictvím RP, například slovní konfrontací, vyhrožováním nebo jinou interakcí, která dává druhé straně šanci reagovat. Okamžité použití smrtící síly bez předchozího vývoje situace není dovoleno.</p></div>
-
-<div class="rule"><h3><b>Player Kill (PK)</b></h3><p>Player Kill označuje situaci, kdy je postava zabita, ale hráč ji může nadále používat. V takovém případě je však nutné dodržet pravidlo ztráty paměti na události vedoucí k smrti.
-
-To znamená, že si postava nepamatuje, kdo ji zabil, kde přesně se to stalo ani jaké okolnosti tomu předcházely. Hráč nesmí tyto informace využívat k následné pomstě nebo pokračování konfliktu.
-
-Po oživení je také zakázáno se vracet na místo smrti s cílem pokračovat v akci. Postava by měla jednat, jako by utrpěla vážné trauma a snažila se situaci vyhodnotit realisticky.</p></div>
-
-<div class="rule"><h3><b>Character Kill (CK)</b></h3><p>Character Kill představuje trvalou smrt postavy. Po jeho provedení již hráč nesmí tuto postavu nijak využívat ani se k ní vracet. CK je závažný zásah do hry a měl by být používán pouze ve výjimečných a dobře odůvodněných případech.
-
-Obvykle se jedná o vyvrcholení dlouhodobého konfliktu, zásadní RP situace nebo rozhodnutí samotného hráče ukončit příběh své postavy. V mnoha případech je nutné schválení administrace.
-
-CK by nikdy neměl být proveden náhodně nebo bez dostatečného RP pozadí.</p></div>
-
-<div class="rule"><h3><b>Second CK</b></h3><p>Second CK označuje opětovné zabití nové nebo jiné postavy stejného hráče bez relevantního důvodu. Takové cílení na konkrétního hráče je zakázáno a považuje se za formu obtěžování.
-
-Hráči nesmí zneužívat znalosti o osobě za postavou k tomu, aby ji opakovaně likvidovali. Každá nová postava musí mít možnost začít „od nuly“ bez neustálého ohrožení kvůli minulosti hráče.</p></div>
-
-<div class="rule"><h3><b>Revenge Kill</b></h3><p>PRevenge Kill znamená zabití jiné postavy jako pomstu za předchozí smrt, aniž by k tomu existoval legitimní RP důvod. Vzhledem k tomu, že si postava po PK nepamatuje okolnosti své smrti, není možné se vracet a mstít.
-
-Jakákoliv pomsta musí vycházet z aktuální RP situace a informací, které postava skutečně má. Využívání OOC znalostí k pomstě je přísně zakázáno.Revenge kill můžete vykonat po 1h reálného času.</p></div>
-
-<div class="rule"><h3><b>Vehicle Kill (VDM)</b></h3><p>Vehicle Kill označuje použití vozidla jako zbraně k úmyslnému zabití nebo zranění jiné postavy bez odpovídajícího RP důvodu.
-
-Není dovoleno najíždět do hráčů, přejíždět je nebo jinak zneužívat vozidla k útoku, pokud k tomu není jasný a realistický důvod. Vozidla mohou být použita v konfliktech pouze v přiměřené míře a vždy musí odpovídat situaci.
-
-Například úmyslné přejíždění hráčů bez předchozí interakce je považováno za porušení pravidel.</p></div>
-
-<div class="rule"><h3><b>Zranění (Injuries)</b></h3><p>Každé zranění, které postava utrpí, musí být odpovídajícím způsobem odehráno. Hráč je povinen reagovat na bolest, omezení pohybu nebo jiné následky zranění realisticky.
-
-Není dovoleno ignorovat střelná zranění, vážné nehody nebo jiné situace, které by měly zásadní dopad na fyzický stav postavy.
-
-Zranění by měla ovlivnit další chování postavy, například omezení v pohybu, nutnost vyhledat lékařskou pomoc nebo delší rekonvalescenci.</p></div>
-
-<div class="rule"><h3><b>Passive RP</b></h3><p>Passive RP představuje základní úkony, které se automaticky předpokládají, i když nejsou explicitně zahrány.
-
-Například se předpokládá, že postava má u sebe běžné věci, zamyká vozidlo nebo používá bezpečnostní pás. Tyto činnosti není nutné neustále vypisovat, ale hráči by je měli respektovat a nezneužívat jejich absence.
-
-Passive RP slouží k plynulosti hry a zamezuje zbytečnému spamování příkazů.</p></div>
-
-<div class="rule"><h3><b>Gross RP</b></h3><p>Gross RP zahrnuje extrémní nebo citlivé situace, jako je mučení, kanibalismus nebo jiné drastické jednání. Takové RP je povoleno pouze za předpokladu, že s ním souhlasí všechny zúčastněné strany.
-
-Nikdo nesmí být nucen účastnit se RP, které mu je nepříjemné. V případě nesouhlasu je nutné situaci upravit nebo ukončit.
-
-Cílem je zachovat komfort všech hráčů a zároveň umožnit hlubší RP pro ty, kteří o něj mají zájem.</p></div>
-
-<div class="rule"><h3><b>/me</b></h3><p>Příkaz /me slouží k popisu akcí, které vaše postava vykonává, ale nejsou přímo viditelné pomocí herních animací nebo mechanik. Pomocí tohoto příkazu doplňujete roleplay o detaily, které dělají hru realističtější a plynulejší.
-
-Text psaný za /me by měl být vždy ve třetí osobě a měl by popisovat konkrétní činnost vaší postavy. Je důležité, aby tyto akce byly realistické, proveditelné a odpovídaly aktuální situaci.
-
-Hráč nesmí pomocí /me vynucovat reakce ostatních hráčů. To znamená, že není dovoleno psát akce, které automaticky ovlivňují druhou postavu bez její možnosti reagovat.</p></div>
-
-<div class="rule"><h3><b>/do</b></h3><p>Příkaz /do slouží k popisu situace, okolí nebo výsledku určité akce. Používá se také pro doplnění informací, které nelze jinak zjistit, nebo pro pokládání otázek směrem k ostatním hráčům.
-
-Na rozdíl od /me se /do často používá k tomu, aby ostatní hráči mohli reagovat nebo rozhodnout o výsledku akce. Tento příkaz by měl být používán férově a neměl by být zneužíván k získání výhody.
-
-Hráč nesmí pomocí /do určovat výsledek situace jednostranně, pokud se týká více hráčů. Výsledek by měl být otevřený nebo ponechaný na reakci ostatních.</p></div>
-
-<div class="rule"><h3><b>Hood Fear</b></h3><p>Hood Fear znamená respektování nebezpečných oblastí, jako jsou území gangů. Pokud se hráč nachází na cizím území, měl by se chovat opatrně a s respektem k místním pravidlům.
-
-Není realistické, aby se postava bezdůvodně pohybovala v nebezpečné oblasti a provokovala místní hráče bez obav o vlastní bezpečnost.
-
-Porušení tohoto pravidla je považováno za nerealistické RP.</p></div>
-
-<div class="rule"><h3><b>Chování k AT</b></h3><p>Hráči jsou povinni respektovat administrátory a jejich rozhodnutí. Administrace má vždy poslední slovo při řešení konfliktů a porušení pravidel.
-
-Jakékoliv urážky, ignorování pokynů nebo snaha obcházet rozhodnutí administrace je zakázána.
-
-V případě nesouhlasu má hráč možnost podat slušné odvolání, nikoliv řešit situaci konfliktně.</p></div>
-
-<div class="rule"><h3><b>Fear RP</b></h3><p>Fear RP znamená hraní strachu o vlastní život. Pokud je postava ohrožena, například když na ni někdo míří zbraní nebo je v přesile, musí reagovat realisticky.
-
-Není dovoleno ignorovat hrozbu, provokovat útočníka nebo se snažit situaci nefér otočit ve svůj prospěch.
-
-Postava by měla jednat tak, aby minimalizovala riziko smrti nebo zranění, stejně jako by to udělal skutečný člověk.</p></div>
-<div class="rule"><h3><b>Power Gaming</b></h3><p>Power Gaming znamená vykonávání nereálných nebo fyzicky nemožných akcí, případně vynucování akcí na ostatních hráčích bez jejich možnosti reakce. Jedná se o chování, které porušuje realističnost roleplaye a dává hráči nefér výhodu.
-
-Hráč nesmí dělat věci, které by v reálném světě nebyly možné, jako například zvládnout přesilu několika ozbrojených osob bez zranění, ignorovat fyzické limity postavy nebo provádět extrémní akrobatické úkony bez jakéhokoliv omezení.
-
-Power Gaming zahrnuje také situace, kdy hráč pomocí příkazů (např. /me) nutí ostatní hráče k určité reakci, aniž by jim dal možnost reagovat.</p></div>
-<div class="rule"><h3><b>AssPulling</b></h3><p>Asspulling označuje situaci, kdy si hráč „vytáhne“ předmět, informaci nebo schopnost bez předchozího roleplaye nebo logického vysvětlení. Jedná se o nerealistické doplňování věcí do hry jen proto, aby hráč získal výhodu.
-
-Každý předmět nebo informace, kterou postava používá, by měla být nějakým způsobem odehraná nebo alespoň logicky podložená. Není dovoleno si náhle „vymyslet“, že má postava u sebe něco, co předtím nijak nezmínila ani nezískala.</p></div>
-<div class="rule"><h3><b>MetaGaming</b></h3><p>Metagaming znamená využívání informací získaných mimo hru (OOC) přímo ve hře (IC). Toto pravidlo je velmi důležité pro zachování férového a kvalitního roleplaye.
-
-Hráč může jednat pouze na základě informací, které jeho postava skutečně získala během hry. Jakékoliv informace z Discordu, streamů, chatu nebo od jiných hráčů mimo hru nesmí být použity.
-
-Metagaming zahrnuje i situace, kdy hráč pozná jiného hráče podle hlasu nebo jména nad postavou, i když jeho postava tuto informaci nemá.</p></div>
-<div class="rule"><h3><b>Fail RP</b></h3><p>Fail RP označuje obecné porušení zásad roleplaye nebo hraní nereálných, nesmyslných či nekvalitních situací. Jedná se o široký pojem, který zahrnuje jakékoliv chování, které kazí RP zážitek ostatním hráčům.
-
-Fail RP může zahrnovat ignorování pravidel, nerealistické reakce, nesmyslné jednání nebo úmyslné narušování hry.
-
-Hráč by měl vždy dbát na to, aby jeho chování odpovídalo situaci a prostředí. Pokud hráč opakovaně porušuje základní principy RP, může být potrestán.</p></div>
-<div class="rule"><h3><b>Water Evading</b></h3><p>Water evading znamená úmyslné využití vody k útěku před policií nebo jinou RP situací za účelem vyhnutí se dopadení. Takové chování je povoleno pouze částečně a musí splňovat jasná omezení, aby zůstala zachována férovost a realističnost RP.
-
-Hráči mohou využívat vodní plochy na mapě, jako jsou řeky, kanály nebo jezero Alamo Sea, k pohybu nebo úniku v rámci RP situace. Tyto oblasti jsou považovány za součást běžného herního prostředí a mohou být součástí honiček nebo RP scén.
-
-Je však přísně zakázáno unikat do otevřeného oceánu mimo mapu nebo na její okraje, kde již není reálná možnost pokračování RP interakce. Únik směrem do hlubokého oceánu nebo mimo hranice mapy je považován za exploit a porušení pravidel.</p></div>
-</div>
-</div>
-</div>
-
-<!-- TEAM -->
-<div id="teamPage" class="hidden">
-<section class="hero">
-<h1>NÁŠ TÝM</h1>
-<p>Tohle jsou členi našeho A-Teamu</p>
-</section>
-
-<div class="container">
-<div class="grid">
-<div class="rule"><h3><b>Owner</b></h3><p>Xeaper</p></div>
-<div class="rule"><h3><b>Owner</b></h3><p>Chobotnak_</p></div>
-<div class="rule"><h3><b>Co-Owner</b></h3><p>Ifwik</p></div>
-<div class="rule"><h3><b>Co-Owner</b></h3><p>onďa</p></div>
-<div class="rule"><h3><b>Management</b></h3><p>Pavel24cz</p></div>
-<div class="rule"><h3><b>Head of Staff</b></h3><p>Milda</p></div>
-<div class="rule"><h3><b>Head Developer</b></h3><p>Rado</p></div>
-<div class="rule"><h3><b>Staff</b></h3><p>Feaki3e</p></div>
-<div class="rule"><h3><b>Staff</b></h3><p>Domca</p></div>
-</div>
-</div>
-</div>
-
-<footer>© 2026 Astryx RP | COO Ifwik </footer>
-
-<script>
-function showPage(page, el){
-  document.body.classList.add('fade');
-
-  setTimeout(()=>{
-    document.getElementById('mainPage').classList.add('hidden');
-    document.getElementById('rulesPage').classList.add('hidden');
-    document.getElementById('teamPage').classList.add('hidden');
-
-    document.getElementById(page+'Page').classList.remove('hidden');
-
-    // active link
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    if(el) el.classList.add('active');
-
-    document.body.classList.remove('fade');
-  },200);
-}
-
-// default
-showPage('main', document.querySelector('.nav-links a'));
-</script>
+  <header>
+    <div class="logo">BRITISH FORCES</div>
+
+    <nav>
+      <button onclick="showPage('onas')">O Nás</button>
+      <button onclick="showPage('cleni')">Naši Členi</button>
+    </nav>
+  </header>
+
+  <!-- O NÁS -->
+  <section id="onas" class="page active">
+    <div class="hero">
+      <h1>Britské Ozbrojené Síly</h1>
+      <p>
+        Vítejte na oficiální stránce naší jednotky. 
+        Tato stránka je vytvořena v moderním černo-modrém stylu s glow efekty.
+        Zde můžeš přidat informace o vaší komunitě, armádní skupině,
+        týmu nebo projektu.
+      </p>
+    </div>
+  </section>
+
+  <!-- ČLENI -->
+  <section id="cleni" class="page">
+    <h2 class="section-title">Naši Členi</h2>
+
+    <div class="members-grid">
+
+      <div class="member-card">
+        <h3>Field Marshal</h3>
+        <p>Ifwik</p>
+      </div>
+
+        <div class="member-card">
+        <h3>Army General</h3>
+        <p>Gladyxx</p>
+      </div>
+
+      <div class="member-card">
+        <h3>General</h3>
+        <p>Dragon</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Lieutenant General</h3>
+        <p>Kubusus</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Major General</h3>
+        <p>_davca</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Brigadier</h3>
+        <p>Tufikoss</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Colonel</h3>
+        <p>Zde dopiš jméno člena</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Lieutenant Colonel</h3>
+        <p>Zde dopiš jméno člena</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Major</h3>
+        <p>alko</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Captain</h3>
+        <p>fissli</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Lieutenant</h3>
+        <p>Fishy</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Second Lieutenant</h3>
+        <p>Zde dopiš jméno člena</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Warrant Officer Class 1</h3>
+        <p>zynx!</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Warrant Officer Class 2</h3>
+        <p>Firest</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Staff Sergeant</h3>
+        <p>unluckeris</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Sergeant</h3>
+        <p>Zde dopiš jméno člena</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Corporal</h3>
+        <p>Zde dopiš jméno člena</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Lance Corporal</h3>
+        <p>Botko</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Private First Class</h3>
+        <p>Lukyso, Dv1do atd..</p>
+      </div>
+
+      <div class="member-card">
+        <h3>Private</h3>
+        <p>Nováčci furt se mění.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    © 2026 British Forces | Spectr MRP
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+
+      document.getElementById(pageId).classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
