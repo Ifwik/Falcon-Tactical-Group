@@ -1,477 +1,526 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Britské Ozbrojené Síly</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forward Task Group</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    z-index:-1;
+
+    background:
+    radial-gradient(circle at 20% 20%, rgba(255,0,0,.20), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(255,0,0,.15), transparent 25%),
+    radial-gradient(circle at 50% 80%, rgba(255,0,0,.20), transparent 35%);
+
+    animation:pulse 8s infinite alternate;
+}
+
+@keyframes pulse{
+    0%{
+        filter:blur(20px);
+        transform:scale(1);
     }
 
-    body {
-      background: #05070d;
-      color: white;
-      overflow-x: hidden;
+    100%{
+        filter:blur(40px);
+        transform:scale(1.05);
     }
+}
 
-    /* Glow background */
-    body::before {
-      content: "";
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0, 140, 255, 0.25), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(0, 110, 255, 0.2), transparent 25%),
-        radial-gradient(circle at 50% 80%, rgba(0, 80, 255, 0.2), transparent 35%);
-      z-index: -1;
-      animation: pulse 8s infinite alternate;
-    }
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    @keyframes pulse {
-      0% {
-        filter: blur(20px);
-        transform: scale(1);
-      }
-      100% {
-        filter: blur(40px);
-        transform: scale(1.05);
-      }
-    }
+    padding:20px 40px;
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 140, 255, 0.4);
-      box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(10px);
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: #4da6ff;
-      text-shadow: 0 0 15px #008cff;
-    }
+    border-bottom:1px solid rgba(255,0,0,.3);
 
-    nav button {
-      margin-left: 15px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 12px;
-      background: rgba(0, 110, 255, 0.15);
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-      border: 1px solid rgba(0,140,255,0.4);
-      box-shadow: 0 0 10px rgba(0,140,255,0.3);
-    }
+    box-shadow:0 0 25px rgba(255,0,0,.2);
 
-    nav button:hover {
-      background: #008cff;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #008cff;
-    }
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
 
-    .page {
-      display: none;
-      padding: 50px 40px;
-      animation: fadeIn 0.5s ease;
-    }
+.logo{
+    font-size:30px;
+    font-weight:700;
+    color:#ff4d4d;
+    text-shadow:0 0 15px red;
+}
 
-    .active {
-      display: block;
-    }
+nav button{
+    margin-left:10px;
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    padding:12px 24px;
 
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-    }
+    background:rgba(255,0,0,.10);
 
-    .hero h1 {
-      font-size: 55px;
-      color: #4da6ff;
-      text-shadow: 0 0 25px #008cff;
-      margin-bottom: 20px;
-    }
+    color:white;
 
-    .hero p {
-      max-width: 850px;
-      margin: auto;
-      font-size: 20px;
-      color: #cfd8ff;
-      line-height: 1.7;
-    }
+    border:1px solid rgba(255,0,0,.4);
 
-    .section-title {
-      text-align: center;
-      font-size: 40px;
-      margin-bottom: 40px;
-      color: #4da6ff;
-      text-shadow: 0 0 20px #008cff;
-    }
+    border-radius:12px;
 
-    .members-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
+    cursor:pointer;
 
-    .member-card {
-      background: rgba(10, 20, 40, 0.75);
-      border: 1px solid rgba(0, 140, 255, 0.4);
-      border-radius: 18px;
-      padding: 25px;
-      transition: 0.3s;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 15px rgba(0,140,255,0.2);
-    }
+    transition:.3s;
 
-    .member-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 0 30px rgba(0,140,255,0.5);
-      border-color: #4da6ff;
-    }
+    box-shadow:0 0 10px rgba(255,0,0,.3);
+}
 
-    .member-card h3 {
-      color: #66b3ff;
-      margin-bottom: 15px;
-      font-size: 24px;
-      text-shadow: 0 0 10px rgba(0,140,255,0.5);
-    }
+nav button:hover{
+    background:#ff0000;
+    transform:scale(1.05);
+    box-shadow:0 0 20px red;
+}
 
-    .member-card p {
-      color: #d6e6ff;
-      font-size: 17px;
-      line-height: 1.5;
-    }
+.page{
+    display:none;
+    padding:50px 40px;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      border-top: 1px solid rgba(0,140,255,0.3);
-      color: #8cbcff;
-      background: rgba(0,0,0,0.5);
-    }
+.active{
+    display:block;
+}
 
-    @media (max-width: 700px) {
-      .hero h1 {
-        font-size: 38px;
-      }
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
 
-      nav button {
-        margin-top: 10px;
-      }
+.hero h1{
+    font-size:60px;
+    color:#ff4d4d;
+    text-shadow:0 0 25px red;
+    margin-bottom:20px;
+}
 
-      header {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
-  </style>
+.hero p{
+    max-width:900px;
+    margin:auto;
+    font-size:20px;
+    line-height:1.8;
+    color:#e0e0e0;
+}
+
+.section-title{
+    text-align:center;
+    margin:50px 0;
+    font-size:40px;
+    color:#ff4d4d;
+    text-shadow:0 0 15px red;
+}
+
+.members-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.member-card{
+    background:rgba(20,5,5,.85);
+
+    border:1px solid rgba(255,0,0,.35);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    backdrop-filter:blur(8px);
+
+    transition:.3s;
+
+    box-shadow:0 0 15px rgba(255,0,0,.15);
+}
+
+.member-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(255,0,0,.45);
+}
+
+.member-card h3{
+    color:#ff5c5c;
+    margin-bottom:15px;
+}
+
+.member-card p{
+    color:#ddd;
+    line-height:1.7;
+}
+
+.discord-btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:15px 30px;
+
+    color:white;
+    text-decoration:none;
+
+    border-radius:12px;
+
+    border:1px solid red;
+
+    background:rgba(255,0,0,.15);
+
+    box-shadow:0 0 15px rgba(255,0,0,.4);
+
+    transition:.3s;
+}
+
+.discord-btn:hover{
+    background:red;
+    transform:scale(1.05);
+}
+
+footer{
+    text-align:center;
+    padding:25px;
+    margin-top:50px;
+
+    border-top:1px solid rgba(255,0,0,.2);
+
+    color:#ff6666;
+}
+
+</style>
 </head>
+
 <body>
 
-  <header>
-    <div class="logo">BRITISH FORCES</div>
+<header>
 
-    <nav>
-      <button onclick="showPage('onas')">O Nás</button>
-      <button onclick="showPage('cleni')">Naši Členi</button>
-    </nav>
-  </header>
+<div class="logo">FTG</div>
 
-  <!-- O NÁS -->
-  <section id="onas" class="page active">
-    <div class="hero">
-      <h1>Britské Ozbrojené Síly</h1>
-      <p>
-        United Kingdom Armed Forces je profesionální military frakce zaměřená na realistický taktický roleplay inspirovaný skutečnými britskými ozbrojenými silami. Naším cílem je nabídnout hráčům autentický zážitek z vojenských operací, týmové spolupráce a disciplíny v moderním bojovém prostředí.
+<nav>
+<button onclick="showPage('onas')">O Nás</button>
+<button onclick="showPage('cleni')">Naši Členi</button>
+</nav>
 
-Frakce funguje na principu reálné vojenské struktury, chain of command a specializovaných jednotek. Každý člen prochází výcvikem a postupně získává zkušenosti, hodnosti a přístup ke specializacím.
-      </p>
-    
-   <h2 class="section-title">Naše Divize</h2>
+</header>
 
-    <div class="members-grid">
+<section id="onas" class="page active">
 
-      <div class="member-card">
-        <h3>Special Air Service (SAS)</h3>
-        <p>
-          Elitní speciální jednotka určená pro tajné operace,
-          protiteroristické mise a speciální vojenské úkoly.
-        </p>
-      </div>
+<div class="hero">
 
-      <div class="member-card">
-        <h3>Royal Military Police</h3>
-        <p>
-          Vojenská policie zajišťující pořádek, bezpečnost
-          a dodržování pravidel uvnitř ozbrojených sil.
-        </p>
-      </div>
+<h1>FORWARD TASK GROUP</h1>
 
-      <div class="member-card">
-        <h3>Royal Air Force (RAF)</h3>
-        <p>
-          Letecká složka britských ozbrojených sil zaměřená
-          na vzdušné operace a podporu jednotek.
-        </p>
-      </div>
+<p>
+Forward Task Group je profesionální vojenská komunita inspirovaná
+britskými ozbrojenými silami.
 
-      <div class="member-card">
-        <h3>Military Training Instructor</h3>
-        <p>
-          Instruktoři odpovědní za výcvik nových členů,
-          disciplínu a vojenskou připravenost.
-        </p>
-      </div>
+Zaměřujeme se na realistické vojenské operace,
+kvalitní výcvik, disciplínu a týmovou spolupráci.
 
-      <div class="member-card">
-        <h3>Special Sniper Team</h3>
-        <p>
-          Speciální odstřelovací tým určený pro přesné zásahy,
-          průzkum a podporu speciálních operací.
-        </p>
-      </div>
+Každý člen má možnost kariérního růstu,
+speciálních kvalifikací a vstupu do elitních jednotek FTG.
+</p>
 
-    </div>
+</div>
 
-       </div>
+<h2 class="section-title">Naše Divize</h2>
 
-    <h2 class="section-title" style="margin-top: 70px;">Co Požadujeme</h2>
+<div class="members-grid">
 
-    <div class="members-grid" style="margin-bottom: 50px;">
+<div class="member-card">
+<h3>Special Air Service (SAS)</h3>
+<p>
+Elitní speciální jednotka určená pro tajné operace,
+průzkum, přímé akce a speciální vojenské mise.
+</p>
+</div>
 
-      <div class="member-card">
+<div class="member-card">
+<h3>Royal Military Police</h3>
+<p>
+Vojenská policie zajišťující pořádek,
+bezpečnost a dodržování pravidel.
+</p>
+</div>
+
+<div class="member-card">
+<h3>Royal Air Force</h3>
+<p>
+Letecká složka zajišťující vzdušnou podporu,
+transport a letecké operace.
+</p>
+</div>
+
+<div class="member-card">
+<h3>Military Training Instructor</h3>
+<p>
+Instruktoři odpovědní za výcvik nových členů,
+kurzy a profesionální přípravu.
+</p>
+</div>
+
+<div class="member-card">
+<h3>Special Sniper Team</h3>
+<p>
+Speciální odstřelovací tým určený pro přesnou střelbu,
+průzkum a podporu operací.
+</p>
+</div>
+
+</div>
+<h2 class="section-title">Co Požadujeme</h2>
+
+<div class="members-grid">
+
+    <div class="member-card">
         <h3>Aktivita</h3>
         <p>
-          Očekáváme pravidelnou aktivitu na serveru,
-          účast na akcích a komunikaci s týmem.
+            Očekáváme pravidelnou aktivitu na serveru,
+            účast na výcvicích, operacích a akcích FTG.
         </p>
-      </div>
+    </div>
 
-      <div class="member-card">
-        <h3>Respekt a Disciplína</h3>
+    <div class="member-card">
+        <h3>Disciplína</h3>
         <p>
-          Každý člen musí dodržovat pravidla,
-          respektovat velení a ostatní členy.
+            Každý člen musí respektovat velení,
+            pravidla serveru a ostatní členy jednotky.
         </p>
-      </div>
+    </div>
 
-      <div class="member-card">
+    <div class="member-card">
         <h3>Funkční Mikrofon</h3>
         <p>
-          Komunikace je důležitá, proto je
-          funkční mikrofon povinný.
+            Komunikace je základ úspěšné operace,
+            proto je mikrofon povinný.
         </p>
-      </div>
-
     </div>
 
-    <h2 class="section-title">Co Můžeš Očekávat</h2>
+    <div class="member-card">
+        <h3>Týmová Spolupráce</h3>
+        <p>
+            FTG funguje jako jeden celek.
+            Schopnost pracovat v týmu je klíčová.
+        </p>
+    </div>
 
-    <div class="members-grid" style="margin-bottom: 50px;">
+</div>
 
-      <div class="member-card">
+<h2 class="section-title">Co Můžeš Očekávat</h2>
+
+<div class="members-grid">
+
+    <div class="member-card">
         <h3>Profesionální Vedení</h3>
         <p>
-          Zkušený leadership a organizované velení
-          během všech operací.
+            Organizované velení a zkušený tým,
+            který se stará o chod celé jednotky.
         </p>
-      </div>
+    </div>
 
-      <div class="member-card">
-        <h3>Vojenské Operace</h3>
+    <div class="member-card">
+        <h3>Realistické Operace</h3>
         <p>
-          Realistické mise, tréninky a speciální
-          operace inspirované britskou armádou.
+            Patrolování, výsadky, speciální operace,
+            ochrana VIP osob a další vojenské akce.
         </p>
-      </div>
+    </div>
 
-      <div class="member-card">
-        <h3>Kariérní Postup</h3>
+    <div class="member-card">
+        <h3>Kariérní Růst</h3>
         <p>
-          Možnost získávat hodnosti, specializace
-          a stát se součástí elitních divizí.
+            Možnost získávat vyšší hodnosti,
+            specializace a velitelské pozice.
         </p>
-      </div>
-
     </div>
 
-
-    <h2 class="section-title" style="margin-top: 70px;">Jak se Přidat</h2>
-
-    <div class="member-card" style="max-width: 900px; margin: auto; text-align: center;">
-      <h3>Staň se součástí British Forces</h3>
-      <p style="margin-top: 15px; line-height: 1.8;">
-        Chceš se přidat do našich řad? Připoj se na náš Discord server,
-        kde si otevřeš ticket pro nábor. Následně ti budou položeny
-        základní otázky ohledně aktivity, zkušeností a chování.
-        Po úspěšném přijetí projdeš vojenským výcvikem a budeš zařazen
-        do jedné z našich divizí.
-      </p>
-
-      <a href="https://discord.gg/cFjrYujRZA" target="_blank"
-         style="display: inline-block; margin-top: 25px; padding: 15px 30px;
-         background: rgba(0,140,255,0.2); border: 1px solid #008cff;
-         border-radius: 14px; color: white; text-decoration: none;
-         font-size: 18px; transition: 0.3s; box-shadow: 0 0 15px rgba(0,140,255,0.4);">
-         Připojit se na Discord
-      </a>
+    <div class="member-card">
+        <h3>Speciální Jednotky</h3>
+        <p>
+            Ti nejlepší mohou vstoupit do SAS,
+            SST nebo dalších elitních složek.
+        </p>
     </div>
 
-  </section>
+</div>
 
+<h2 class="section-title">Jak se Přidat</h2>
 
+<div class="member-card" style="max-width:900px;margin:auto;text-align:center;">
 
-  
-  <!-- ČLENI -->
-  <section id="cleni" class="page">
-    <h2 class="section-title">Naši Členi</h2>
+    <h3>Nábor do FTG</h3>
 
-    <div class="members-grid">
+    <p style="margin-top:15px;line-height:1.8;">
+        Chceš se stát součástí Forward Task Group?
 
-      <div class="member-card">
-        <h3>Field Marshal</h3>
-        <p>Ifwik</p>
-      </div>
+        Připoj se na náš Discord server a otevři si náborový ticket.
+        Následně ti budou položeny základní otázky ohledně tvé aktivity,
+        zkušeností a zájmu o vojenský roleplay.
 
-        <div class="member-card">
-        <h3>Army General</h3>
-        <p>Gladyxx</p>
-      </div>
+        Po úspěšném přijetí absolvuješ základní výcvik,
+        kde se naučíš veškeré postupy a pravidla používané v FTG.
 
-      <div class="member-card">
-        <h3>General</h3>
-        <p>Dragon</p>
-      </div>
+        Po dokončení výcviku budeš oficiálně zařazen mezi členy
+        a získáš možnost postupovat v hodnostech nebo vstoupit
+        do specializovaných divizí.
+    </p>
 
-      <div class="member-card">
-        <h3>Lieutenant General</h3>
-        <p>Kubusus</p>
-      </div>
+    <a href="https://discord.gg/cFjrYujRZA"
+       target="_blank"
+       class="discord-btn">
 
-      <div class="member-card">
-        <h3>Major General</h3>
-        <p>_davca</p>
-      </div>
+       Připojit se na Discord
 
-      <div class="member-card">
-        <h3>Brigadier</h3>
-        <p>Tufikoss</p>
-      </div>
+    </a>
 
-      <div class="member-card">
-        <h3>Colonel</h3>
-        <p>---</p>
-      </div>
+</div>
 
-      <div class="member-card">
-        <h3>Lieutenant Colonel</h3>
-        <p>---</p>
-      </div>
+</section>
 
-      <div class="member-card">
-        <h3>Major</h3>
-        <p>alko</p>
-      </div>
+<section id="cleni" class="page">
 
-      <div class="member-card">
-        <h3>Captain</h3>
-        <p>fissli</p>
-      </div>
+<h2 class="section-title">Naši Členi</h2>
 
-      <div class="member-card">
-        <h3>Lieutenant</h3>
-        <p>Fishy</p>
-      </div>
+<div class="members-grid">
 
-      <div class="member-card">
-        <h3>Second Lieutenant</h3>
-        <p>---</p>
-      </div>
+<div class="member-card">
+<h3>Field Marshal</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Warrant Officer Class 1</h3>
-        <p>zynx!</p>
-      </div>
+<div class="member-card">
+<h3>General</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Warrant Officer Class 2</h3>
-        <p>Firest</p>
-      </div>
+<div class="member-card">
+<h3>Lieutenant General</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Staff Sergeant</h3>
-        <p>unluckeris</p>
-      </div>
+<div class="member-card">
+<h3>Major General</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Sergeant</h3>
-        <p>---</p>
-      </div>
+<div class="member-card">
+<h3>Brigadier</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Corporal</h3>
-        <p>---</p>
-      </div>
+<div class="member-card">
+<h3>Colonel</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Lance Corporal</h3>
-        <p>Botko</p>
-      </div>
+<div class="member-card">
+<h3>Lieutenant Colonel</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Private First Class</h3>
-        <p>Lukyso, Dv1do atd..</p>
-      </div>
+<div class="member-card">
+<h3>Major</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-      <div class="member-card">
-        <h3>Private</h3>
-        <p>Nováčci furt se mění.</p>
-      </div>
+<div class="member-card">
+<h3>Captain</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-    </div>
-  </section>
+<div class="member-card">
+<h3>Lieutenant</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-  <footer>
-    © 2026 British Forces | Spectr MRP
-  </footer>
+<div class="member-card">
+<h3>Second Lieutenant</h3>
+<p>Doplň jméno člena</p>
+</div>
+<div class="member-card">
+<h3>Warrant Officer Class 1</h3>
+<p>Doplň jméno člena</p>
+</div>
 
-  <script>
-    function showPage(pageId) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => {
+<div class="member-card">
+<h3>Warrant Officer Class 2</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+<div class="member-card">
+<h3>Staff Sergeant</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+<div class="member-card">
+<h3>Sergeant</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+<div class="member-card">
+<h3>Corporal</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+<div class="member-card">
+<h3>Lance Corporal</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+<div class="member-card">
+<h3>Private</h3>
+<p>Doplň jméno člena</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 Forward Task Group | FTG Military Community
+
+</footer>
+
+<script>
+
+function showPage(pageId){
+
+    const pages = document.querySelectorAll('.page');
+
+    pages.forEach(page => {
         page.classList.remove('active');
-      });
+    });
 
-      document.getElementById(pageId).classList.add('active');
-    }
-  </script>
+    document.getElementById(pageId).classList.add('active');
+}
+
+</script>
 
 </body>
 </html>
